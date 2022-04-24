@@ -1,0 +1,119 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "title": "API Documentation",
+      "description": "App for listing and create users",
+      "version": "1.0.0",
+      "contact": {
+        "email": "rphmota@gmail.com"
+      }
+    },    
+    "paths": {
+      "/users": {
+        "post": {
+          "tags": ["Users"],
+          "summary": "Create user",
+          "description": "Create a new user",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": ["name", "email"],
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "email": "string"
+                  },
+                  "example": {
+                    "name": "Raphael",
+                    "email": "raphael@gmail.com"
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Created"
+            },
+            "400": {
+              "description": "Bad Request"
+            }
+          }
+        },
+        "get": {
+          "tags": ["Users"],
+          "summary": "List all users",
+          "description": "List all users as admin",
+          "parameters": [
+            {
+              "in": "header",
+              "name": "user_id",
+              "required": true,
+              "type": "string",
+              "format": "uuid"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Success"
+            },
+            "400": {
+              "description": "User is not admin"
+            }
+          }
+        }
+      },
+      "/users/{user_id}": {
+        "get": {
+          "tags": ["Users"],
+          "summary": "get user profile",
+          "description": "get user profile",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "user_id",
+              "required": true,
+              "type": "string",
+              "format": "uuid"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Success"
+            },
+            "404": {
+              "description": "User not exists"
+            }
+          }
+        }
+      },
+      "/users/{user_id}/admin": {
+        "patch": {
+          "tags": ["Users"],
+          "summary": "Turn user admin",
+          "description": "Update the user to admin",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "user_id",
+              "required": true,
+              "type": "string",
+              "format": "uuid"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Success"
+            },
+            "404": {
+              "description": "User not exists"
+            }
+          }
+        }
+      }
+    }
+  }
